@@ -55,17 +55,22 @@ CE11/
 **`greedyPath(int start, int end)`**
 - At each step, move to the unvisited neighbor with the smallest edge weight
 - NOT guaranteed to find the shortest total path
+- **Validate input:** if `start` or `end` is out of range, return `{{}, -1}` immediately
 - Return `{{}, -1}` if the destination cannot be reached
 
 **`dijkstraPath(int start, int end)`**
 - Use a min-priority queue to always expand the globally cheapest known node
 - Guaranteed to find the shortest path
+- **Validate input:** if `start` or `end` is out of range, return `{{}, -1}` immediately
 - Call `reconstructPath()` to build the return value
 
 **`aStarPath(int start, int end)`**
 - Like Dijkstra's, but uses `heuristic(neighbor, end)` to compute `fScore = gScore + h`
 - Also guaranteed to find the shortest path
+- **Validate input:** if `start` or `end` is out of range, return `{{}, -1}` immediately
 - Call `reconstructPath()` to build the return value
+
+> 🛡️ **Defensive coding note:** "Out of range" means any index that isn't a valid location in the graph — negative numbers, or values ≥ `locations.size()`. Check this *before* you index into any vector. Crashing on bad input is never acceptable.
 
 ### In `main.cpp`:
 - Connect the three algorithm calls to the provided `printResult()` helper
@@ -97,12 +102,12 @@ g++ -std=c++17 -o autonav main.cpp CityMap.cpp
 | `heuristic()` returns correct Euclidean distance | 1 |
 | `reconstructPath()` returns correct named path | 1 |
 | Greedy correct path & cost | 2 |
-| Greedy handles no-path case | 1 |
+| Greedy handles no-path / invalid input | 1 |
 | Dijkstra's optimal — single route | 2 |
 | Dijkstra's optimal — multiple routes | 2 |
 | A* optimal — single route | 2 |
 | A* optimal — multiple routes | 2 |
-| Edge cases (same start/end, etc.) | 2 |
+| Edge cases (same start/end, invalid input) | 2 |
 | `analysis.txt` quality | 3 |
 | Code style & documentation | 2 |
 | **Total** | **20** |
@@ -114,5 +119,6 @@ g++ -std=c++17 -o autonav main.cpp CityMap.cpp
 - Do **not** modify `Location.hpp`
 - No `std::cout` inside `CityMap` class methods — all output in `main.cpp`
 - `reconstructPath()` must be called by all three path algorithms — no duplicated logic
+- All three path algorithms must validate their inputs and return `{{}, -1}` for out-of-range indices — no crashes allowed
 - `analysis.txt` must be in your repo before submitting
 - Commit as you go — no all-at-once uploads
