@@ -24,7 +24,7 @@ private:
 
     // Returns Euclidean distance between two locations' coordinates, truncated to int
     // Used as the admissible heuristic for A*
-    int heuristic(int from, int to) const;
+    int heuristic(Location from, Location to) const;
 
     // Traces back through prev[] to build a vector of location names
     // Returns empty vector if no path exists
